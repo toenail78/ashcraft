@@ -3,8 +3,7 @@
 ## queue (active — only remaining work)
 - Real 2-tablet co-op test (Chris): partner dog + fetch from joining tablet, talking indicator/mic meter, partner sees your dances, pickaxe not covering touch buttons, tablet fps + glass look.
 - TURN relay fallback — HELD: PeerJS 1.5.4 default config already uses Google STUN + PeerJS public TURN (eu-0/us-0.turn.peerjs.com:3478). A real fix needs our own TURN (TLS on 443, e.g. Cloudflare Calls TURN / metered.ca) with credentials; adding custom iceServers without a credentialed server would replace the defaults and could break existing rooms. Needs Chris to OK a TURN account.
-- Build mode co-op (share build world over PeerJS) + multiple save slots.
-- Verify late-join partner avatar for a 3rd joiner (avatar flag false once in tests).
+- Real 2-tablet test of HOST BUILD (build together) + slot picker fits on tablet title screen.
 - Real-device test on iPad Safari with a Bluetooth controller (B button opens emote wheel after victory; B still sneaks while held).
 - Level 1 tutorial step for crafting polish; more block types (emissive only, never runtime lights).
 - note: perf gate needs force-click on #play (5s click times out); patched copy at /tmp/gate.py
@@ -38,3 +37,8 @@
 ## done (10/27 late night, round 2)
 - Emote wheel: B key / 💃 DANCE touch / controller B after victory; 8 kid-friendly goofy dances (classic, chicken, robot, spin, jumping jacks, noodle, floss, wiggle); partner sees your dance (optional 'dn' field in 'p', old clients ignore)
 - Partner talking indicator ("🔊 ENZO TALKING") + mic level meters for you and partner (optional 'tk' field; WebAudio analyser only, no new lights)
+
+## done (10/27 ~9:45pm)
+- Build together: HOST BUILD on title hosts your current slot's build world; partner taps JOIN and gets it (snap carries optional bd:1). Edits sync both ways; host autosaves both kids' blocks; guest never overwrites its own saves. Save format unchanged {format:'ashcraft-world',v:1}.
+- 3 build save slots (SLOT 1/2/3 on title, remembered; IndexedDB keys build1..3; old saves = slot 1). Export/import use the chosen slot.
+- 3rd-joiner fix: the old connection's late 'close' event was wiping the new partner (NET=null, avatar removed). Close/error/data now only count for the current connection; stale avatar/dog cleared when a new partner joins.
